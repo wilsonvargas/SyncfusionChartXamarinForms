@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+             xmlns:local="clr-namespace:SyncfusionChartXF"
+             x:Class="SyncfusionChartXF.Views.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="template">
+                <StackLayout Orientation="Horizontal" 
+                             BackgroundColor="#DCDCDC" VerticalOptions="FillAndExpand" 
+                             HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding Type}" TextColor="White" 
+                           VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text=":" TextColor="White" VerticalOptions="Center" 
+                           HorizontalOptions="Center" />
+                    <Label Text="{Binding AmountSpent}" TextColor="White" 
+                           VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+            </DataTemplate>
+            <chart:ChartColorCollection x:Key="Colors">
+                <Color>#607180</Color>
+                <Color>#3FBDA1</Color>
+                <Color>#135E91</Color>
+            </chart:ChartColorCollection>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+	VerticalOptions="Center"
+	HorizontalOptions="Center"
+	WidthRequest="300"
+	HeightRequest="300"
+	BackgroundColor="Black"
+	Padding="0,0,0,0">
+        <chart:SfChart x:Name="sfchart">
+            <chart:SfChart.Series>
+                <chart:PieSeries x:Name="series1"
+                       XBindingPath = "Type"
+                       YBindingPath = "AmountSpent"
+                       CircularCoefficient="1"
+                       ConnectorLineType="Bezier"
+                       EnableTooltip ="true"
+                       ItemsSource="{Binding ExpenditureData}"
+                       TooltipTemplate ="{StaticResource template}"
+                       ExplodeOnTouch="True"
+                       EnableSmartLabels="True"
+                       ExplodeRadius="10"
+                       StartAngle="0"
+                       EndAngle="360"
+                       LegendIcon="Circle"
+                       DataMarkerPosition="Inside">
+                    <chart:PieSeries.DataMarker>
+                        <chart:ChartDataMarker ShowLabel="False" LabelContent="Percentage"/>
+                    </chart:PieSeries.DataMarker>
+                    <chart:PieSeries.ColorModel>
+                        <chart:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}"/>
+                    </chart:PieSeries.ColorModel>
+                </chart:PieSeries>
+
+            </chart:SfChart.Series>
+
+            <chart:SfChart.Legend>
+                <chart:ChartLegend
+                IsVisible="True"
+                         IsIconVisible="True"
+                         Orientation="Horizontal"
+                         DockPosition="Bottom"
+                OverflowMode="Wrap"/>
+            </chart:SfChart.Legend>
+
+            <chart:SfChart.ChartBehaviors>
+                <chart:ChartTooltipBehavior BackgroundColor="#DCDCDC"/>
+            </chart:SfChart.ChartBehaviors>
+
+        </chart:SfChart>
+    </Grid>
+
+</ContentPage>
